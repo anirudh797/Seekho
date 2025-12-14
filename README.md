@@ -186,11 +186,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
-
-- [Jikan API](https://jikan.moe/) for providing free MyAnimeList data
-- [MyAnimeList](https://myanimelist.net/) for the anime database
-- Android community for the excellent libraries and tools
 
 ## 📧 Contact
 

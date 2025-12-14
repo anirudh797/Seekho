@@ -3,39 +3,25 @@ package com.seekho.anime.ui.detail
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.seekho.anime.R
 import com.seekho.anime.data.model.Anime
+import com.seekho.anime.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
     private lateinit var characterAdapter: CharacterAdapter
-    
-    private lateinit var toolbar: Toolbar
-    private lateinit var posterImageView: ImageView
-    private lateinit var noImageTextView: TextView
-    private lateinit var titleTextView: TextView
-    private lateinit var ratingTextView: TextView
-    private lateinit var episodesTextView: TextView
-    private lateinit var typeTextView: TextView
-    private lateinit var genresTextView: TextView
-    private lateinit var synopsisTextView: TextView
-    private lateinit var charactersRecyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Get anime ID from intent
         val animeId = intent.getIntExtra(EXTRA_ANIME_ID, -1)
@@ -46,28 +32,15 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
-        // Initialize views
-        toolbar = findViewById(R.id.toolbar)
-        posterImageView = findViewById(R.id.posterImageView)
-        noImageTextView = findViewById(R.id.noImageTextView)
-        titleTextView = findViewById(R.id.titleTextView)
-        ratingTextView = findViewById(R.id.ratingTextView)
-        episodesTextView = findViewById(R.id.episodesTextView)
-        typeTextView = findViewById(R.id.typeTextView)
-        genresTextView = findViewById(R.id.genresTextView)
-        synopsisTextView = findViewById(R.id.synopsisTextView)
-        charactersRecyclerView = findViewById(R.id.charactersRecyclerView)
-        progressBar = findViewById(R.id.progressBar)
-
         // Setup toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = animeTitle
 
         // Setup characters RecyclerView
         characterAdapter = CharacterAdapter()
-        charactersRecyclerView.layoutManager = LinearLayoutManager(this)
-        charactersRecyclerView.adapter = characterAdapter
+        binding.charactersRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.charactersRecyclerView.adapter = characterAdapter
 
         // Setup ViewModel
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
@@ -88,7 +61,7 @@ class DetailActivity : AppCompatActivity() {
 
         // Observe loading state
         viewModel.loadingState.observe(this) { isLoading ->
-            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         // Observe error state
@@ -108,12 +81,12 @@ class DetailActivity : AppCompatActivity() {
 
     private fun displayAnimeDetails(anime: Anime) {
         // Title
-        titleTextView.text = anime.title
+        binding.titleTextView.text = anime.title
         supportActionBar?.title = anime.title
 
         // Rating
         val score = anime.score ?: 0.0
-        ratingTextView.text = if (score > 0) {
+        binding.ratingTextView.text = if (score > 0) {
             String.format("★ %.1f", score)
         } else {
             "N/A"
@@ -121,29 +94,29 @@ class DetailActivity : AppCompatActivity() {
 
         // Episodes
         val episodes = anime.episodes
-        episodesTextView.text = if (episodes != null && episodes > 0) {
+        binding.episodesTextView.text = if (episodes != null && episodes > 0) {
             "$episodes Episodes"
         } else {
             "Unknown"
         }
 
         // Type
-        typeTextView.text = anime.type ?: "Unknown"
+        binding.typeTextView.text = anime.type ?: "Unknown"
 
         // Genres
         val genresList = anime.genres
         if (genresList != null && genresList.isNotEmpty()) {
-            genresTextView.text = genresList.joinToString(", ") { it.name }
+            binding.genresTextView.text = genresList.joinToString(", ") { it.name }
         } else {
-            genresTextView.text = "Unknown"
+            binding.genresTextView.text = "Unknown"
         }
 
         // Synopsis
         val synopsis = anime.synopsis
         if (!synopsis.isNullOrBlank()) {
-            synopsisTextView.text = synopsis
+            binding.synopsisTextView.text = synopsis
         } else {
-            synopsisTextView.text = "No synopsis available"
+            binding.synopsisTextView.text = "No synopsis available"
         }
 
         // Load poster image
@@ -151,15 +124,15 @@ class DetailActivity : AppCompatActivity() {
             ?: anime.images?.jpg?.imageUrl
         
         if (imageUrl != null) {
-            posterImageView.load(imageUrl) {
+            binding.posterImageView.load(imageUrl) {
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
-            noImageTextView.visibility = View.GONE
+            binding.noImageTextView.visibility = View.GONE
         } else {
-            posterImageView.setImageResource(R.drawable.ic_placeholder)
-            noImageTextView.visibility = View.VISIBLE
+            binding.posterImageView.setImageResource(R.drawable.ic_placeholder)
+            binding.noImageTextView.visibility = View.VISIBLE
         }
     }
 

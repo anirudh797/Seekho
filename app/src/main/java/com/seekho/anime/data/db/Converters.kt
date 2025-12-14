@@ -3,6 +3,7 @@ package com.seekho.anime.data.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.seekho.anime.data.model.AnimeImages
 import com.seekho.anime.data.model.Genre
 import com.seekho.anime.data.model.TrailerInfo
 
@@ -32,5 +33,17 @@ class Converters {
     fun toTrailerInfo(trailerString: String?): TrailerInfo? {
         if (trailerString == null) return null
         return gson.fromJson(trailerString, TrailerInfo::class.java)
+    }
+
+    @TypeConverter
+    fun fromAnimeImages(images: AnimeImages?): String? {
+        if (images == null) return null
+        return gson.toJson(images)
+    }
+
+    @TypeConverter
+    fun toAnimeImages(imagesString: String?): AnimeImages? {
+        if (imagesString == null) return null
+        return gson.fromJson(imagesString, AnimeImages::class.java)
     }
 }

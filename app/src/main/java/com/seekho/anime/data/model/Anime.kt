@@ -1,6 +1,5 @@
 package com.seekho.anime.data.model
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -26,7 +25,6 @@ data class Anime(
     @SerializedName("synopsis")
     val synopsis: String? = null,
     
-    @Embedded
     @SerializedName("images")
     val images: AnimeImages? = null,
     
