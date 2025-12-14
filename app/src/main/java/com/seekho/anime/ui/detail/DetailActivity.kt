@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.seekho.anime.R
 import com.seekho.anime.data.model.Anime
 import com.seekho.anime.databinding.ActivityDetailBinding
+import com.seekho.anime.utils.FeatureFlags
 
 class DetailActivity : AppCompatActivity() {
 
@@ -133,21 +134,30 @@ class DetailActivity : AppCompatActivity() {
             binding.synopsisTextView.text = "No synopsis available"
         }
 
-        // Load poster image
-        val imageUrl = anime.images?.jpg?.largeImageUrl 
-            ?: anime.images?.jpg?.imageUrl
-        
-        if (imageUrl != null) {
-            Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_placeholder)
-                .centerCrop()
-                .into(binding.posterImageView)
-            binding.noImageTextView.visibility = View.GONE
+        // Load poster image (check if profile images are enabled)
+        if (FeatureFlags.ENABLE_PROFILE_IMAGES) {
+            val imageUrl = anime.images?.jpg?.largeImageUrl
+                ?: anime.images?.jpg?.imageUrl
+
+            if (imageUrl != null) {
+                Glide.with(this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .error(R.drawable.ic_placeholder)
+                    .centerCrop()
+                    .into(binding.posterImageView)
+                binding.noImageTextView.visibility = View.GONE
+            } else {
+                binding.posterImageView.setImageResource(R.drawable.ic_placeholder)
+                binding.noImageTextView.visibility = View.VISIBLE
+            }
         } else {
-            binding.posterImageView.setImageResource(R.drawable.ic_placeholder)
-            binding.noImageTextView.visibility = View.VISIBLE
+            // Hide poster image due to legal requirements
+            binding.posterImageView.visibility = View.GONE
+            binding.noImageTextView.visibility = View.GONE
+            // Hide the entire media container
+            val mediaContainer = findViewById<View>(R.id.mediaContainer)
+            mediaContainer?.visibility = View.GONE
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seekho.anime.R
 import com.seekho.anime.data.model.CharacterData
+import com.seekho.anime.utils.FeatureFlags
 
 class CharacterAdapter : ListAdapter<CharacterData, CharacterAdapter.CharacterViewHolder>(CharacterDiffCallback()) {
 
@@ -34,17 +35,28 @@ class CharacterAdapter : ListAdapter<CharacterData, CharacterAdapter.CharacterVi
             characterNameTextView.text = characterData.character.name
             characterRoleTextView.text = characterData.role
             
-            // Load character image with Glide
-            val imageUrl = characterData.character.images?.jpg?.imageUrl
-            if (imageUrl != null) {
-                Glide.with(itemView.context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_placeholder)
-                    .circleCrop()
-                    .into(characterImageView)
+            // Check if profile images are enabled (legal compliance)
+            if (FeatureFlags.ENABLE_PROFILE_IMAGES) {
+                // Load character image with Glide
+                characterImageView.visibility = View.VISIBLE
+                val imageUrl = characterData.character.images?.jpg?.imageUrl
+                if (imageUrl != null) {
+                    Glide.with(itemView.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_placeholder)
+                        .error(R.drawable.ic_placeholder)
+                        .circleCrop()
+                        .into(characterImageView)
+                } else {
+                    characterImageView.setImageResource(R.drawable.ic_placeholder)
+                }
             } else {
-                characterImageView.setImageResource(R.drawable.ic_placeholder)
+                // Hide image view due to legal requirements
+                characterImageView.visibility = View.GONE
+                // Remove any margins that depend on the image
+                val layoutParams = characterNameTextView.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.marginStart = 0
+                characterNameTextView.layoutParams = layoutParams
             }
         }
     }

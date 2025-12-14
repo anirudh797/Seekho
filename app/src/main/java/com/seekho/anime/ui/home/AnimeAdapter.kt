@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seekho.anime.R
 import com.seekho.anime.data.model.Anime
+import com.seekho.anime.utils.FeatureFlags
 
 class AnimeAdapter(
     private val onAnimeClick: (Anime) -> Unit
@@ -54,17 +55,27 @@ class AnimeAdapter(
             // Type
             typeTextView.text = anime.type ?: "Unknown"
             
-            // Load poster image with Glide
-            val imageUrl = anime.images?.jpg?.imageUrl
-            if (imageUrl != null) {
-                Glide.with(itemView.context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_placeholder)
-                    .centerCrop()
-                    .into(posterImageView)
+            // Load poster image with Glide (check if profile images are enabled)
+            if (FeatureFlags.ENABLE_PROFILE_IMAGES) {
+                posterImageView.visibility = View.VISIBLE
+                val imageUrl = anime.images?.jpg?.imageUrl
+                if (imageUrl != null) {
+                    Glide.with(itemView.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_placeholder)
+                        .error(R.drawable.ic_placeholder)
+                        .centerCrop()
+                        .into(posterImageView)
+                } else {
+                    posterImageView.setImageResource(R.drawable.ic_placeholder)
+                }
             } else {
-                posterImageView.setImageResource(R.drawable.ic_placeholder)
+                // Hide poster image due to legal requirements
+                posterImageView.visibility = View.GONE
+                // Adjust layout to make title take full width
+                val layoutParams = posterImageView.layoutParams
+                layoutParams.width = 0
+                posterImageView.layoutParams = layoutParams
             }
             
             itemView.setOnClickListener {
