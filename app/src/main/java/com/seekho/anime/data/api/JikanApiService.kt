@@ -12,8 +12,8 @@ interface JikanApiService {
     
     @GET("top/anime")
     suspend fun getTopAnime(
-        @Query("page") page: Int = 1,
-        @Query("limit") limit: Int = 25
+        @Query("page") page: Int = DEFAULT_PAGE,
+        @Query("limit") limit: Int = DEFAULT_LIMIT
     ): Response<AnimeResponse>
     
     @GET("anime/{id}/full")
@@ -28,5 +28,7 @@ interface JikanApiService {
     
     companion object {
         const val BASE_URL = "https://api.jikan.moe/v4/"
+        const val DEFAULT_PAGE = 1
+        const val DEFAULT_LIMIT = 25
     }
 }

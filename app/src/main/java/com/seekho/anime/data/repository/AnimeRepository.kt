@@ -39,7 +39,7 @@ class AnimeRepository(
             }
             
             Log.d(TAG, "Fetching top anime from API")
-            val response = apiService.getTopAnime(page = 1, limit = 25)
+            val response = apiService.getTopAnime()
             
             if (response.isSuccessful && response.body() != null) {
                 val animeList = response.body()!!.data
