@@ -17,4 +17,5 @@
     <string name="episodes_format">%d Episodes</string>
     <string name="no_episodes">Unknown</string>
     <string name="no_synopsis">No synopsis available</string>
+    <string name="error_loading_anime">Error loading anime</string>
 </resources>

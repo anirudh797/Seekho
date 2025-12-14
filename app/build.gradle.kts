@@ -70,8 +70,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // Image loading - Coil
-    implementation("io.coil-kt:coil:2.5.0")
+    // Image loading - Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    ksp("com.github.bumptech.glide:ksp:4.16.0")
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.3.2")

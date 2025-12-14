@@ -80,7 +80,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Load anime on first launch
+        // Observe network state for auto-sync notifications
+        var previousNetworkState: Boolean? = null
+        viewModel.networkState.observe(this) { isConnected ->
+            // Only show message when transitioning from offline to online
+            if (previousNetworkState == false && isConnected == true) {
+                Snackbar.make(
+                    binding.recyclerView,
+                    "Connected! Syncing latest data...",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else if (previousNetworkState == true && isConnected == false) {
+                Snackbar.make(
+                    binding.recyclerView,
+                    "Offline - Showing cached data",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            previousNetworkState = isConnected
+        }
+
+        // Load anime on first launch only
         if (savedInstanceState == null) {
             viewModel.loadTopAnime()
         }

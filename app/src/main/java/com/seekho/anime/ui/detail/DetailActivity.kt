@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.load
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.seekho.anime.R
 import com.seekho.anime.data.model.Anime
@@ -75,6 +75,20 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
+        // Observe network state for auto-sync notifications
+        var previousNetworkState: Boolean? = null
+        viewModel.networkState.observe(this) { isConnected ->
+            // Only show message when transitioning from offline to online
+            if (previousNetworkState == false && isConnected == true) {
+                Snackbar.make(
+                    binding.root,
+                    "Connected! Refreshing data...",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            previousNetworkState = isConnected
+        }
+
         // Load anime details
         viewModel.loadAnimeDetails(animeId)
     }
@@ -124,11 +138,12 @@ class DetailActivity : AppCompatActivity() {
             ?: anime.images?.jpg?.imageUrl
         
         if (imageUrl != null) {
-            binding.posterImageView.load(imageUrl) {
-                crossfade(true)
-                placeholder(R.drawable.ic_placeholder)
-                error(R.drawable.ic_placeholder)
-            }
+            Glide.with(this)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
+                .centerCrop()
+                .into(binding.posterImageView)
             binding.noImageTextView.visibility = View.GONE
         } else {
             binding.posterImageView.setImageResource(R.drawable.ic_placeholder)

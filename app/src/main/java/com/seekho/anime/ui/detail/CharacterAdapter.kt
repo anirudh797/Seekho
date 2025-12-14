@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
 import com.seekho.anime.R
 import com.seekho.anime.data.model.CharacterData
 
@@ -34,14 +34,15 @@ class CharacterAdapter : ListAdapter<CharacterData, CharacterAdapter.CharacterVi
             characterNameTextView.text = characterData.character.name
             characterRoleTextView.text = characterData.role
             
-            // Load character image with Coil
+            // Load character image with Glide
             val imageUrl = characterData.character.images?.jpg?.imageUrl
             if (imageUrl != null) {
-                characterImageView.load(imageUrl) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
+                Glide.with(itemView.context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .error(R.drawable.ic_placeholder)
+                    .circleCrop()
+                    .into(characterImageView)
             } else {
                 characterImageView.setImageResource(R.drawable.ic_placeholder)
             }

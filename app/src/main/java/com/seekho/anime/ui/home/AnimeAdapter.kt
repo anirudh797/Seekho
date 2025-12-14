@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
 import com.seekho.anime.R
 import com.seekho.anime.data.model.Anime
 
@@ -54,14 +54,15 @@ class AnimeAdapter(
             // Type
             typeTextView.text = anime.type ?: "Unknown"
             
-            // Load poster image with Coil
+            // Load poster image with Glide
             val imageUrl = anime.images?.jpg?.imageUrl
             if (imageUrl != null) {
-                posterImageView.load(imageUrl) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_placeholder)
-                    error(R.drawable.ic_placeholder)
-                }
+                Glide.with(itemView.context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .error(R.drawable.ic_placeholder)
+                    .centerCrop()
+                    .into(posterImageView)
             } else {
                 posterImageView.setImageResource(R.drawable.ic_placeholder)
             }

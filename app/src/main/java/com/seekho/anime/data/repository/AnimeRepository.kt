@@ -42,10 +42,10 @@ class AnimeRepository(
             val response = apiService.getTopAnime()
             
             if (response.isSuccessful && response.body() != null) {
-                val animeList = response.body()!!.data
+                val animeList = response.body()?.data
                 
                 // Update last updated timestamp
-                val updatedList = animeList.map { it.copy(lastUpdated = System.currentTimeMillis()) }
+                val updatedList = animeList?.map { it.copy(lastUpdated = System.currentTimeMillis()) } ?: emptyList()
                 
                 // Cache in database
                 animeDao.insertAllAnime(updatedList)
