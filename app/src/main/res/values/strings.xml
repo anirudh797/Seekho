@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Seekho Anime</string>
+    <string name="top_anime">Top Anime</string>
+    <string name="loading">Loading…</string>
+    <string name="error_loading">Error loading data</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="retry">Retry</string>
+    <string name="refresh">Refresh</string>
+    <string name="episodes">Episodes:</string>
+    <string name="rating">Rating:</string>
+    <string name="genres">Genres</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="main_characters">Main Characters</string>
+    <string name="no_image_available">No image available</string>
+    <string name="score_format">★ %.1f</string>
+    <string name="episodes_format">%d Episodes</string>
+    <string name="no_episodes">Unknown</string>
+    <string name="no_synopsis">No synopsis available</string>
+</resources>
