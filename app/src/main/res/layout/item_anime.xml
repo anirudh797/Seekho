@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/posterImageView"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Anime poster"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@android:drawable/ic_menu_gallery" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/posterImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Attack on Titan" />
+
+        <TextView
+            android:id="@+id/episodesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="Episodes: "
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintStart_toEndOf="@id/posterImageView" />
+
+        <TextView
+            android:id="@+id/episodesTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/episodesLabel"
+            app:layout_constraintStart_toEndOf="@id/episodesLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="25" />
+
+        <TextView
+            android:id="@+id/ratingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:text="Rating: "
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/episodesLabel"
+            app:layout_constraintStart_toEndOf="@id/posterImageView" />
+
+        <TextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="@id/ratingLabel"
+            app:layout_constraintStart_toEndOf="@id/ratingLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="8.5 / 10" />
+
+        <TextView
+            android:id="@+id/typeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/colorPrimary"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/ratingLabel"
+            app:layout_constraintStart_toEndOf="@id/posterImageView"
+            tools:text="TV" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
