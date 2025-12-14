@@ -1,5 +1,7 @@
 # Seekho - Android Anime Application
 
+Demo Link - https://vimeo.com/1146312818?share=copy&fl=sv&fe=ci
+
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com/)
 [![Kotlin](https://img.shields.io/badge/Language-Kotlin-blue.svg)](https://kotlinlang.org/)
 [![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg)](https://android-arsenal.com/api?level=24)
@@ -178,18 +180,6 @@ This app uses the [Jikan API](https://jikan.moe/) - a free, open-source REST API
 - **Debug**: Development build with logging enabled
 - **Release**: Production build with ProGuard/R8 optimization
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-## 📧 Contact
-
-For questions or feedback, please open an issue on GitHub.
 
 ---
 
