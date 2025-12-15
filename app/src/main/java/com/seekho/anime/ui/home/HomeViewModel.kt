@@ -76,7 +76,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private fun autoSyncData() {
         viewModelScope.launch {
             Log.d(TAG, "Auto-syncing data...")
-            when (val result = repository.fetchTopAnime()) {
+            when (val result = repository.fetchTopAnime(forceSync = true)) {
                 is NetworkResult.Success -> {
                     Log.d(TAG, "Auto-sync successful: ${result.data?.size ?: 0} items")
                 }

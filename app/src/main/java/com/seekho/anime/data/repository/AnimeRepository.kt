@@ -26,9 +26,9 @@ class AnimeRepository(
     val animeListLiveData: LiveData<List<Anime>> = animeDao.getAllAnime()
     
     // Fetch top anime from API and cache in database
-    suspend fun fetchTopAnime(): NetworkResult<List<Anime>> = withContext(Dispatchers.IO) {
+    suspend fun fetchTopAnime(forceSync : Boolean = false): NetworkResult<List<Anime>> = withContext(Dispatchers.IO) {
         try {
-            if (!NetworkUtils.isNetworkAvailable(context)) {
+            if (!NetworkUtils.isNetworkAvailable(context) && !forceSync) {
                 // Return cached data if no network
                 val cachedData = animeDao.getAllAnimeList()
                 return@withContext if (cachedData.isNotEmpty()) {
